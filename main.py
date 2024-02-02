@@ -7,6 +7,19 @@ set_appearance_mode("dark")
 app.title("calculator")
 app.resizable(0, 0)
 
+# functions
+value: str = ""
+
+
+def addValue(word: str):
+    global value
+    if len(value) != 9:
+        value += word
+        label.configure(text=value)
+        return
+    label.configure(text=value)
+
+
 # Buttons
 clear_button = CTkButton(
     master=app,
@@ -123,7 +136,8 @@ seven_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('7')
 )
 seven_button.place(x=20, y=220)
 
@@ -136,7 +150,8 @@ eight_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('8')
 )
 eight_button.place(x=120, y=220)
 
@@ -149,7 +164,8 @@ nine_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('9')
 )
 nine_button.place(x=243, y=220)
 
@@ -162,7 +178,8 @@ four_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('4')
 )
 four_button.place(x=20, y=290)
 
@@ -175,7 +192,8 @@ five_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('5')
 )
 five_button.place(x=120, y=290)
 
@@ -188,7 +206,8 @@ six_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('6')
 )
 six_button.place(x=243, y=290)
 
@@ -201,7 +220,8 @@ one_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('1')
 )
 one_button.place(x=20, y=360)
 
@@ -214,7 +234,8 @@ two_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('2')
 )
 two_button.place(x=120, y=360)
 
@@ -227,7 +248,8 @@ three_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('3')
 )
 three_button.place(x=243, y=360)
 
@@ -240,7 +262,8 @@ zero_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('0')
 )
 zero_button.place(x=20, y=430)
 
@@ -253,7 +276,8 @@ zero_zero_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: addValue('00')
 )
 zero_zero_button.place(x=120, y=430)
 
@@ -275,12 +299,13 @@ dot_button.place(x=243, y=430)
 
 # entry
 
-entry = CTkEntry(
+label = CTkLabel(
     master=app,
     width=410,
-    font=('Arial',50)
+    text="",
+    font=('Arial', 80)
 
 )
-entry.place(x=20,y=15)
+label.place(x=20, y=15)
 
 app.mainloop()
