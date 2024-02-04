@@ -52,6 +52,7 @@ class calculator_opr:
         self.allThing = []
         self.dot_count = 0
         self.value = ""
+        all_values.configure(text="")
         label.configure(text=self.value)
         operator_label.configure(text="")
 
@@ -59,6 +60,8 @@ class calculator_opr:
         if operator == '-' and self.value == '':
             self.allThing.append(operator)
             operator_label.configure(text=operator)
+            all_values.configure(text=self.allThing)
+
         if self.value != "0" and self.value != "":
             self.allThing.append(self.value)
             self.allThing.append(operator)
@@ -66,12 +69,15 @@ class calculator_opr:
             label.configure(text=self.value)
             operator_label.configure(text=operator)
 
+        all_values.configure(text=self.allThing)
+
     def getResult(self):
         if self.value != 0 and self.value != "":
             self.allThing.append(self.value)
+            all_values.configure(text=self.allThing)
             result = "".join(self.allThing)
             outPut = eval(result)
-            self.clearLabel()
+            operator_label.configure(text="")
             label.configure(text=outPut)
 
 
@@ -373,14 +379,14 @@ label = CTkLabel(
 )
 label.place(x=20, y=20)
 
-exc_label = CTkLabel(
+all_values = CTkLabel(
     master=app,
     width=350,
-    text="Exception error's",
+    text="",
     font=('Arial', 15),
-    text_color="#ff5370"
+    text_color="#ffffff"
 )
-exc_label.place(x=50, y=120)
+all_values.place(x=50, y=120)
 
 operator_label = CTkLabel(
     master=app,
