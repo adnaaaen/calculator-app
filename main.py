@@ -7,18 +7,75 @@ set_appearance_mode("dark")
 app.title("calculator")
 app.resizable(0, 0)
 
-# functions
-value: str = ""
+
+# calculator functions
+
+class calculator_opr:
+    def __init__(self):
+        self.allThing = []
+        self.dot_count = 0
+        self.value = ""
+
+    def addValue(self, word: str):
+        if self.value == '0':
+            self.value = ""
+        if word == '00' and self.value == '':
+            self.value = '0'
+            label.configure(text=self.value)
+            return
+        if word == '.':
+            if self.dot_count != 1:
+                if self.value == "":
+                    self.value += '0.'
+                    self.dot_count = 1
+                else:
+                    self.value += '.'
+                    self.dot_count = 1
+        else:
+            if len(self.value) != 9:
+                self.value += word
+        label.configure(text=self.value)
+
+    def backSpace(self):
+        if self.value == '0.':
+            self.value = ''
+            self.dot_count = 0
+        if len(self.value) != 0:
+            if self.value[-1] == '.':
+                self.dot_count = 0
+            result = list(self.value)
+            result = result[:-1]
+            self.value = "".join(result)
+        label.configure(text=self.value)
+
+    def clearLabel(self):
+        self.allThing = []
+        self.dot_count = 0
+        self.value = ""
+        label.configure(text=self.value)
+        operator_label.configure(text="")
+
+    def setOpr(self, operator: str):
+        if operator == '-' and self.value == '':
+            self.allThing.append(operator)
+            operator_label.configure(text=operator)
+        if self.value != "0" and self.value != "":
+            self.allThing.append(self.value)
+            self.allThing.append(operator)
+            self.value = ""
+            label.configure(text=self.value)
+            operator_label.configure(text=operator)
+
+    def getResult(self):
+        if self.value != 0 and self.value != "":
+            self.allThing.append(self.value)
+            result = "".join(self.allThing)
+            outPut = eval(result)
+            self.clearLabel()
+            label.configure(text=outPut)
 
 
-def addValue(word: str):
-    global value
-    if len(value) != 9:
-        value += word
-        label.configure(text=value)
-        return
-    label.configure(text=value)
-
+opr_obj = calculator_opr()
 
 # Buttons
 clear_button = CTkButton(
@@ -30,7 +87,8 @@ clear_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=opr_obj.clearLabel
 )
 clear_button.place(x=20, y=150)
 
@@ -43,7 +101,8 @@ modulo_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: opr_obj.setOpr('%')
 )
 modulo_button.place(x=120, y=150)
 
@@ -56,7 +115,8 @@ backspace_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=opr_obj.backSpace
 )
 backspace_button.place(x=233, y=150)
 
@@ -69,7 +129,8 @@ divide_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: opr_obj.setOpr('/')
 )
 divide_button.place(x=337, y=150)
 
@@ -82,7 +143,8 @@ multiple_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: opr_obj.setOpr('*')
 )
 multiple_button.place(x=338, y=220)
 
@@ -95,7 +157,8 @@ substraction_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: opr_obj.setOpr('-')
 )
 substraction_button.place(x=338, y=290)
 
@@ -108,7 +171,8 @@ addition_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: opr_obj.setOpr('+')
 )
 addition_button.place(x=338, y=360)
 
@@ -121,7 +185,8 @@ equals_button = CTkButton(
     hover_color="#0f111a",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=opr_obj.getResult
 )
 equals_button.place(x=338, y=429)
 
@@ -137,7 +202,7 @@ seven_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('7')
+    command=lambda: opr_obj.addValue('7')
 )
 seven_button.place(x=20, y=220)
 
@@ -151,7 +216,7 @@ eight_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('8')
+    command=lambda: opr_obj.addValue('8')
 )
 eight_button.place(x=120, y=220)
 
@@ -165,7 +230,7 @@ nine_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('9')
+    command=lambda: opr_obj.addValue('9')
 )
 nine_button.place(x=243, y=220)
 
@@ -179,7 +244,7 @@ four_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('4')
+    command=lambda: opr_obj.addValue('4')
 )
 four_button.place(x=20, y=290)
 
@@ -193,7 +258,7 @@ five_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('5')
+    command=lambda: opr_obj.addValue('5')
 )
 five_button.place(x=120, y=290)
 
@@ -207,7 +272,7 @@ six_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('6')
+    command=lambda: opr_obj.addValue('6')
 )
 six_button.place(x=243, y=290)
 
@@ -221,7 +286,7 @@ one_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('1')
+    command=lambda: opr_obj.addValue('1')
 )
 one_button.place(x=20, y=360)
 
@@ -235,7 +300,7 @@ two_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('2')
+    command=lambda: opr_obj.addValue('2')
 )
 two_button.place(x=120, y=360)
 
@@ -249,7 +314,7 @@ three_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('3')
+    command=lambda: opr_obj.addValue('3')
 )
 three_button.place(x=243, y=360)
 
@@ -263,7 +328,7 @@ zero_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('0')
+    command=lambda: opr_obj.addValue('0')
 )
 zero_button.place(x=20, y=430)
 
@@ -277,7 +342,7 @@ zero_zero_button = CTkButton(
     hover=True,
     width=60,
     font=("Arial", 50),
-    command=lambda: addValue('00')
+    command=lambda: opr_obj.addValue('00')
 )
 zero_zero_button.place(x=120, y=430)
 
@@ -290,7 +355,8 @@ dot_button = CTkButton(
     hover_color="#407379",
     hover=True,
     width=60,
-    font=("Arial", 50)
+    font=("Arial", 50),
+    command=lambda: opr_obj.addValue('.')
 )
 dot_button.place(x=243, y=430)
 
@@ -302,10 +368,27 @@ dot_button.place(x=243, y=430)
 label = CTkLabel(
     master=app,
     width=410,
-    text="",
-    font=('Arial', 80)
-
+    text="0",
+    font=('Arial', 80),
 )
-label.place(x=20, y=15)
+label.place(x=20, y=20)
+
+exc_label = CTkLabel(
+    master=app,
+    width=350,
+    text="Exception error's",
+    font=('Arial', 15),
+    text_color="#ff5370"
+)
+exc_label.place(x=50, y=120)
+
+operator_label = CTkLabel(
+    master=app,
+    width=20,
+    text_color='white',
+    text="",
+    font=('arial', 25),
+)
+operator_label.place(x=410, y=1)
 
 app.mainloop()
