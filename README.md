@@ -27,10 +27,7 @@ run calculator
 
 
 
-## Working Demo
+## Screen Shot
 
 ![App Screenshot](https://github.com/adnaaaen/calculator-app/blob/main/.demo/demo_screenshot.png)
 
-
-
-[![Demo Video](https://github.com/adnaaaen/calculator-app/blob/main/.demo/demo_screenshot.png)](https://github.com/adnaaaen/calculator-app/blob/main/.demo/demo_screenrecord.webm)
